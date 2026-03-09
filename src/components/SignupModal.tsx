@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import styles from './SignupModal.module.css'
 
 interface Props {
@@ -8,11 +8,11 @@ interface Props {
 export default function SignupModal({ onEnter }: Props) {
   const [username, setUsername] = useState('')
 
-  function handleSubmit() {
+  const handleSubmit = useCallback(() => {
     const trimmed = username.trim()
     if (!trimmed) return
     onEnter(trimmed)
-  }
+  }, [username, onEnter])
 
   return (
     <div className={styles.backdrop}>

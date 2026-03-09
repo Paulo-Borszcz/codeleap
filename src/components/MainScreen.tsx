@@ -25,7 +25,7 @@ export default function MainScreen({ username }: Props) {
     refetchInterval: 15000,
   })
 
-  const sorted = [...posts].sort(
+  const sorted = posts.toSorted(
     (a, b) => new Date(b.created_datetime).getTime() - new Date(a.created_datetime).getTime()
   )
 
@@ -58,9 +58,22 @@ export default function MainScreen({ username }: Props) {
   const canCreate = newTitle.trim() && newContent.trim()
 
   const handleCreate = useCallback(() => {
-    if (!canCreate) return
+    if (!newTitle.trim() || !newContent.trim()) return
     createMutation.mutate({ username, title: newTitle.trim(), content: newContent.trim() })
-  }, [canCreate, createMutation, username, newTitle, newContent])
+  }, [createMutation, username, newTitle, newContent])
+
+  const handleSave = useCallback(
+    (title: string, content: string) => {
+      if (!editingPost) return
+      updateMutation.mutate({ id: editingPost.id, title, content })
+    },
+    [editingPost, updateMutation]
+  )
+
+  const handleDeleteConfirm = useCallback(() => {
+    if (!deletingPost) return
+    deleteMutation.mutate(deletingPost.id)
+  }, [deletingPost, deleteMutation])
 
   return (
     <div className={styles.page}>
@@ -116,23 +129,21 @@ export default function MainScreen({ username }: Props) {
         )}
       </main>
 
-      {editingPost && (
+      {editingPost ? (
         <EditModal
           initialTitle={editingPost.title}
           initialContent={editingPost.content}
-          onSave={(title, content) =>
-            updateMutation.mutate({ id: editingPost.id, title, content })
-          }
+          onSave={handleSave}
           onCancel={() => setEditingPost(null)}
         />
-      )}
+      ) : null}
 
-      {deletingPost && (
+      {deletingPost ? (
         <DeleteModal
-          onConfirm={() => deleteMutation.mutate(deletingPost.id)}
+          onConfirm={handleDeleteConfirm}
           onCancel={() => setDeletingPost(null)}
         />
-      )}
+      ) : null}
     </div>
   )
 }

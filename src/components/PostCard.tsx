@@ -17,6 +17,20 @@ function timeAgo(dateStr: string): string {
   return `${Math.floor(diff / 86400)} days ago`
 }
 
+const TRASH_ICON = (
+  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M2 4h12M5.3 4V2.7h5.3V4M6.7 7.3v4M9.3 7.3v4M3.3 4l.7 9.3h8L12.7 4H3.3z"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
+
+const EDIT_ICON = (
+  <svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+    <path d="M11.3 2a1.9 1.9 0 0 1 2.7 2.7L4.7 14H2v-2.7L11.3 2z"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
+
 const PostCard = memo(function PostCard({ post, currentUser, onEdit, onDelete }: Props) {
   const isOwner = post.username === currentUser
 
@@ -32,7 +46,7 @@ const PostCard = memo(function PostCard({ post, currentUser, onEdit, onDelete }:
               onClick={() => onDelete(post)}
               aria-label="Delete post"
             >
-              <TrashIcon />
+              {TRASH_ICON}
             </button>
             <button
               type="button"
@@ -40,7 +54,7 @@ const PostCard = memo(function PostCard({ post, currentUser, onEdit, onDelete }:
               onClick={() => onEdit(post)}
               aria-label="Edit post"
             >
-              <EditIcon />
+              {EDIT_ICON}
             </button>
           </div>
         )}
@@ -55,21 +69,3 @@ const PostCard = memo(function PostCard({ post, currentUser, onEdit, onDelete }:
 })
 
 export default PostCard
-
-function TrashIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
-      <path d="M2 4h12M5.333 4V2.667h5.334V4M6.667 7.333v4M9.333 7.333v4M3.333 4l.667 9.333h8L12.667 4H3.333z"
-        stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function EditIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 16 16" fill="none">
-      <path d="M11.333 2a1.886 1.886 0 0 1 2.667 2.667L4.667 14H2v-2.667L11.333 2z"
-        stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}

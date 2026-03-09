@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import styles from './EditModal.module.css'
 
 interface Props {
@@ -13,6 +13,10 @@ export default function EditModal({ initialTitle, initialContent, onSave, onCanc
   const [content, setContent] = useState(initialContent)
 
   const isValid = title.trim() && content.trim()
+
+  const handleSave = useCallback(() => {
+    onSave(title.trim(), content.trim())
+  }, [title, content, onSave])
 
   return (
     <div className={styles.overlay}>
@@ -40,7 +44,7 @@ export default function EditModal({ initialTitle, initialContent, onSave, onCanc
             type="button"
             className={styles.btnSave}
             disabled={!isValid}
-            onClick={() => onSave(title.trim(), content.trim())}
+            onClick={handleSave}
           >
             Save
           </button>
