@@ -1,4 +1,5 @@
-import { Post } from '../api/posts'
+import { memo } from 'react'
+import type { Post } from '../api/posts'
 import styles from './PostCard.module.css'
 
 interface Props {
@@ -16,7 +17,7 @@ function timeAgo(dateStr: string): string {
   return `${Math.floor(diff / 86400)} days ago`
 }
 
-export default function PostCard({ post, currentUser, onEdit, onDelete }: Props) {
+const PostCard = memo(function PostCard({ post, currentUser, onEdit, onDelete }: Props) {
   const isOwner = post.username === currentUser
 
   return (
@@ -26,6 +27,7 @@ export default function PostCard({ post, currentUser, onEdit, onDelete }: Props)
         {isOwner && (
           <div className={styles.actions}>
             <button
+              type="button"
               className={styles.iconBtn}
               onClick={() => onDelete(post)}
               aria-label="Delete post"
@@ -33,6 +35,7 @@ export default function PostCard({ post, currentUser, onEdit, onDelete }: Props)
               <TrashIcon />
             </button>
             <button
+              type="button"
               className={styles.iconBtn}
               onClick={() => onEdit(post)}
               aria-label="Edit post"
@@ -49,7 +52,9 @@ export default function PostCard({ post, currentUser, onEdit, onDelete }: Props)
       <p className={styles.content}>{post.content}</p>
     </div>
   )
-}
+})
+
+export default PostCard
 
 function TrashIcon() {
   return (

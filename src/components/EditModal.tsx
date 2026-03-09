@@ -35,8 +35,9 @@ export default function EditModal({ initialTitle, initialContent, onSave, onCanc
           onChange={(e) => setContent(e.target.value)}
         />
         <div className={styles.actions}>
-          <button className={styles.btnCancel} onClick={onCancel}>Cancel</button>
+          <button type="button" className={styles.btnCancel} onClick={onCancel}>Cancel</button>
           <button
+            type="button"
             className={styles.btnSave}
             disabled={!isValid}
             onClick={() => onSave(title.trim(), content.trim())}

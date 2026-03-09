@@ -32,6 +32,7 @@ export default function SignupModal({ onEnter }: Props) {
         />
         <div className={styles.footer}>
           <button
+            type="button"
             className={styles.btnEnter}
             disabled={!username.trim()}
             onClick={handleSubmit}

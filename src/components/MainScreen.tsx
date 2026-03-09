@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { fetchPosts, createPost, updatePost, deletePost, Post } from '../api/posts'
+import { fetchPosts, createPost, updatePost, deletePost } from '../api/posts'
+import type { Post } from '../api/posts'
 import PostCard from './PostCard'
 import EditModal from './EditModal'
 import DeleteModal from './DeleteModal'
@@ -56,10 +57,10 @@ export default function MainScreen({ username }: Props) {
 
   const canCreate = newTitle.trim() && newContent.trim()
 
-  function handleCreate() {
+  const handleCreate = useCallback(() => {
     if (!canCreate) return
     createMutation.mutate({ username, title: newTitle.trim(), content: newContent.trim() })
-  }
+  }, [canCreate, createMutation, username, newTitle, newContent])
 
   return (
     <div className={styles.page}>
@@ -88,6 +89,7 @@ export default function MainScreen({ username }: Props) {
           />
           <div className={styles.createFooter}>
             <button
+              type="button"
               className={styles.btnCreate}
               disabled={!canCreate || createMutation.isPending}
               onClick={handleCreate}
