@@ -1,0 +1,75 @@
+.card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.header {
+  background: #7695ec;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  background: transparent;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.iconBtn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.meta {
+  padding: 12px 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 700;
+  color: #777777;
+}
+
+.time {
+  font-size: 14px;
+  color: #aaaaaa;
+}
+
+.content {
+  padding: 12px 24px 24px;
+  font-size: 16px;
+  color: #333333;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
